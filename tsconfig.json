@@ -1,0 +1,20 @@
+{
+  "compilerOptions": {
+    "target": "es2016",                              /* Set the JavaScript language version for emitted JavaScript and include compatible library declarations. */
+    "lib": ["dom", "dom.iterable", "esnext"],       /* Specify a set of bundled library declaration files that describe the target runtime environment. */
+    "jsx": "react-jsx",                            /* Specify what JSX code is generated. */
+    "module": "commonjs",                          /* Specify what module code is generated. */
+    "moduleResolution": "node",                    /* Specify how TypeScript looks up a file from a given module specifier. */
+    "esModuleInterop": true,                       /* Emit additional JavaScript to ease support for importing CommonJS modules. */
+    "skipLibCheck": true,                          /* Skip type checking of declaration files. */
+    "strict": true,                               /* Enable all strict type-checking options. */
+    "forceConsistentCasingInFileNames": true,      /* Ensure that casing is correct in imports. */
+    "resolveJsonModule": true,                     /* Enable importing .json files. */
+    "isolatedModules": true,                       /* Ensure all files can be transpiled independently. */
+    "noEmit": true,                               /* Disable emitting files from a compilation. */
+    "baseUrl": "./",                              /* Specify the base directory to resolve non-relative module names. */
+    "paths": {}                                   /* Specify a set of entries that re-map imports to additional lookup locations. */
+  },
+  "include": ["src"],                            /* Specify the folder to include. */
+  "exclude": ["node_modules"]                     /* Exclude node_modules folder. */
+}
