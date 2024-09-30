@@ -1,1 +1,1 @@
-self.__REACT_LOADABLE_MANIFEST='{"firebaseClient.ts -> firebase/analytics":{"id":3059,"files":["static/chunks/59.c8528966610f37bf.js"]}}';
+self.__REACT_LOADABLE_MANIFEST="{\"firebaseClient.ts -> firebase/analytics\":{\"id\":\"firebaseClient.ts -> firebase/analytics\",\"files\":[\"static/chunks/node_modules_firebase_analytics_dist_esm_index_esm_js.js\"]}}"

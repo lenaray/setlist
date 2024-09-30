@@ -1,8 +1,8 @@
 {
   "firebaseClient.ts -> firebase/analytics": {
-    "id": 3059,
+    "id": "firebaseClient.ts -> firebase/analytics",
     "files": [
-      "static/chunks/59.c8528966610f37bf.js"
+      "static/chunks/node_modules_firebase_analytics_dist_esm_index_esm_js.js"
     ]
   }
 }

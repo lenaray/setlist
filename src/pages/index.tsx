@@ -1,6 +1,6 @@
 import React from 'react';
 import { useRouter } from 'next/router';
-import '../styles/WelcomePage.module.css'; // Ensure you create this CSS module file
+import styles from '../styles/WelcomePage.module.css';
 
 const HomePage = () => {
   const router = useRouter();
@@ -14,12 +14,12 @@ const HomePage = () => {
   };
 
   return (
-    <div className="container">
-      <div className="overlay">
-        <h1 className="title">Welcome to Setlist</h1>
-        <div className="buttonContainer">
-          <button className="button" onClick={handleLogin}>Login</button>
-          <button className="button" onClick={handleSignUp}>Sign Up</button>
+    <div className={styles.container}>
+      <div className={styles.overlay}>
+        <h1 className={styles.title}>Welcome to Setlist</h1>
+        <div className={styles.buttonContainer}>
+          <button className={styles.button} onClick={handleLogin}>Login</button>
+          <button className={styles.button} onClick={handleSignUp}>Sign Up</button>
         </div>
       </div>
     </div>
