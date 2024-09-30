@@ -1,42 +1,43 @@
 .container {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    height: 100vh;
-    background: url('../assets/music-bg3.jpg') no-repeat center center/cover;
-    position: relative;
-  }
-  
-  .overlay {
-    text-align: center;
-    color: white;
-    background: rgba(0, 0, 0, 0.5); /* Optional: dark overlay for better text contrast */
-    padding: 20px;
-    border-radius: 10px;
-  }
-  
-  .title {
-    font-size: 3rem;
-    margin-bottom: 20px;
-  }
-  
-  .buttonContainer {
-    display: flex;
-    justify-content: center;
-    gap: 10px;
-  }
-  
-  .button {
-    background-color: #0070f3;
-    color: white;
-    border: none;
-    padding: 10px 20px;
-    font-size: 1rem;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background-color 0.3s;
-  }
-  
-  .button:hover {
-    background-color: #005bb5;
-  }
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  width: 100%;
+  background: url('/assets/music-bg7.jpg') no-repeat center center/cover;
+  position: relative;
+}
+
+.overlay {
+  text-align: center;
+  color: white;
+  background: rgba(0, 0, 0, 0.5); /* Optional: dark overlay for better text contrast */
+  padding: 20px;
+  border-radius: 10px;
+}
+
+.title {
+  font-size: 3rem;
+  margin-bottom: 20px;
+}
+
+.buttonContainer {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+}
+
+.button {
+  background-color: #0070f3;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  font-size: 1rem;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.button:hover {
+  background-color: #005bb5;
+}
