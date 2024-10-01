@@ -6,6 +6,7 @@ const HomePage = () => {
   const router = useRouter();
 
   const handleLogin = () => {
+    console.log("handling login");
     router.push('/login'); // Navigate to login page
   };
 

@@ -7,14 +7,16 @@ export default async function handler(req, res) {
     try {
         const response = await axios.get(`https://app.ticketmaster.com/discovery/v2/events.json`, {
             params: {
-                // latlong: `${lat},${lon}`,
-                apiKey: TICKETMASTER_API_KEY,
+                latlong: `${lat},${lon}`,
+                // countryCode: 'US',
+                apikey: TICKETMASTER_API_KEY,
             },
         });
 
         const events = response.data._embedded.events;
         res.status(200).json({ events });
     } catch (error) {
+        console.error('Error fetching concert data:', error);
         res.status(500).json({ error: 'Error fetching concert data'});
     }
 }
