@@ -1,24 +1,41 @@
 import React, { useState, useEffect } from 'react';
+import Popup from 'reactjs-popup';
 import { useRouter } from 'next/router';
 import axios from 'axios';
 import { loadGetInitialProps } from 'next/dist/shared/lib/utils';
 import styles from '../styles/MainPage.module.css';
+import AuthProvider from "./AuthProvider";
 
 const MainScreen = () => {
     const [showPopup, setShowPopup] = useState(false);
     const [concerts, setConcerts] = useState([]);
     const [searchQuery, setSearchQuery] = useState('');
+    const [followedArtists, setFollowedArtists] = useState([]);
+    const [accessToken, setAccesstoken] = useState(null);
     const router = useRouter();
 
     const SPOTIFY_CLIENT_ID = process.env.NEXT_PUBLIC_SPOTIFY_CLIENT_ID;
     const SPOTIFY_CLIENT_SECRET = process.env.NEXT_PUBLIC_SPOTIFY_CLIENT_SECRET;
     const REDIRECT_URI = process.env.NEXT_PUBLIC_REDIRECT_URI;
 
+    const AUTH_URL = `https://accounts.spotify.com/authorize?client_id=${SPOTIFY_CLIENT_ID}&response_type=code&redirect_uri=${encodeURIComponent(REDIRECT_URI)}&scope=user-follow-read`;
+
+    // useEffect(() => {
+    //     const isNewUser = true;
+    //     console.error("new user: ", isNewUser);
+    //     if (isNewUser) {
+    //         setShowPopup(true);
+    //         console.log("new user: ", showPopup);
+    //         // requestLocation();
+    //     }
+    // }, []);
+
     useEffect(() => {
-        const isNewUser = true;
-        if (isNewUser) {
-            setShowPopup(true);
-            requestLocation();
+        const token = localStorage.getItem('spotify_access_token');
+        if (token) {
+            fetchFollowedArtists(token);
+        } else {
+            setShowPopup(true); // Show the popup to link Spotify
         }
     }, []);
 
@@ -36,14 +53,14 @@ const MainScreen = () => {
 
     const fetchConcertsNearby = async (latitude, longitude) => {
         try {
-            const response = await axios.get(`/api/concerts`);
+            const response = await axios.get(`/api/concerts?lat=${latitude}&lon=${longitude}`);
             setConcerts(response.data.events);
         } catch (error) {
             console.error('Error fetching concert data:', error);
         }
     };
 
-    const handleSearch = (e) => {
+    const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
         setSearchQuery(e.target.value);
     }
 
@@ -51,85 +68,54 @@ const MainScreen = () => {
         concert.name.toLowerCase().includes(searchQuery.toLowerCase())
     );
 
-    const linkSpotify = async () => {
-        const accessToken = await getSpotifyAccessToken();
-        
-        if (!accessToken) {
-            alert('Failed to link Spotify account. Please try again.');
-            return;
-        }
-
+    const fetchFollowedArtists = async (accessToken) => {
         try {
             const response = await axios.get('https://api.spotify.com/v1/me/following?type=artist&limit=20', {
                 headers: {
-                    Authorization: `Bearer ${accessToken}`
+                    Authorization: `Bearer ${accessToken}`,
                 },
             });
 
             const followedArtists = response.data.artists.items;
+            setFollowedArtists(followedArtists);
             console.log('Followed Artists:', followedArtists);
-            alert('Spotify linked successfully!');
         } catch (error) {
-            console.error("Error fetching followed artists:", error);
-            alert('Failed to fetch followed artists. Please ensure you have granted permission.');
-        } finally {
-            closePopup();
+            console.error('Error fetching followed artists:', error);
         }
     };
 
-    const getSpotifyAccessToken = async () => {
-        const AUTH_URL = `https://accounts.spotify.com/authorize?client_id=${SPOTIFY_CLIENT_ID}&response_type=code&redirect_uri=${encodeURIComponent(REDIRECT_URI)}&scope=user-follow-read`;
-        
-        // Check if there is an authorization code already present in the URL
-        const urlParams = new URLSearchParams(window.location.search);
-        const code = urlParams.get('code');
-        console.log('Authorization Code:', code);
+    // const linkSpotify = async () => {
+    //     console.log("linking spotify");
+    //     try {
+    //         const storedAccessToken = sessionStorage.getItem('spotify_access_token');
+    //         if (storedAccessToken) {
+    //             await fetchFollowedArtists(storedAccessToken);
+    //         } else {
+    //             console.log(window.location.href);
+    //             window.location.href = 'http://localhost:3000/api/auth/spotify';
+    //         }
+    //     } catch (error) {
+    //         console.error('Error linking Spotify:', error);
+    //     }
+    // };
 
-        if (!code) {
-            // If no code is present, redirect the user to the Spotify authorization URL
-            window.location.href = AUTH_URL;
-            return null;
-        } else {
-            // If code is present, exchange it for an access token
-            try {
-                const response = await axios.post('https://accounts.spotify.com/api/token', new URLSearchParams({
-                    grant_type: 'authorization_code',
-                    code: code,
-                    redirect_uri: REDIRECT_URI,
-                    client_id: SPOTIFY_CLIENT_ID,
-                    client_secret: SPOTIFY_CLIENT_SECRET,
-                }), {
-                    headers: {
-                        'Content-Type': 'application/x-www-form-urlencoded',
-                    },
-                });
-
-                // Remove the code from the URL
-                window.history.replaceState({}, document.title, window.location.origin + window.location.pathname);
-                console.log("returning access token");
-                return response.data.access_token; // Return the access token
-            } catch (error) {
-                console.error('Error getting access token:', error);
-                return null;
-            }
-        }
-    };
-
+    const linkSpotify = async () => {
+        window.location.href = AUTH_URL;
+    }
+    
     const closePopup = () => {
         setShowPopup(false);
     };
 
     return (
         <div>
-            {showPopup && (
-                <div className={styles.popuOverlay}>
+            <Popup open={showPopup} closeOnDocumentClick={false}>
                     <div className={styles.popup}>
                         <h2>Link your Spotify account</h2>
-                        <button onClick={linkSpotify}>Link Spotify</button>
+                        <button onClick={linkSpotify} className={styles.spotifyButton}>Link Spotify</button>
                         <button className={styles.closeButton} onClick={closePopup}>x</button>
                     </div>
-                </div>
-            )}
+            </Popup>
 
             <div className={styles.mainScreen}>
                 <input
@@ -154,6 +140,17 @@ const MainScreen = () => {
                 <p>No concerts found</p>
             )}
             </div>
+
+            {followedArtists.length > 0 && (
+                <div className={styles.artistListings}>
+                    <h3>Your Followed Artists:</h3>
+                    {followedArtists.map((artist: any) => (
+                        <div key={artist.id} className={styles.artistItem}>
+                            <h4>{artist.name}</h4>
+                        </div>
+                    ))}
+                </div>
+            )}
         </div>
     )
 };
