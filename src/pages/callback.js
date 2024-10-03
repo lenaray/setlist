@@ -26,9 +26,14 @@ const Callback = () => {
               },
             });
   
-            const { access_token } = response.data; // Extract the access token
+            const { access_token, refresh_token, expires_in } = response.data; // Extract the access token
+            const expiryTime = new Date().getTime() + expires_in * 1000;
+
             localStorage.setItem('spotify_access_token', access_token); // Store the token
-            router.push('/'); // Redirect to the home page
+            localStorage.setItem('spotify_refresh_token', refresh_token);
+            localStorage.setItem('spotify_token_expiry', expiryTime);
+
+            router.push('/main'); // Redirect to the home page
           } catch (error) {
             console.error('Error fetching access token:', error);
           }
