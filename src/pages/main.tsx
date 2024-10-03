@@ -8,13 +8,16 @@ import { loadGetInitialProps } from 'next/dist/shared/lib/utils';
 import styles from '../styles/MainPage.module.css';
 import AuthProvider from "./AuthProvider";
 import ProfileButton from '../components/ProfileButton';
+import SpotifyMusicPlayer from '../components/WebPlayer';
+import { getToken } from 'next-auth/jwt';
 
 const MainScreen = () => {
     const [showPopup, setShowPopup] = useState(false);
     const [concerts, setConcerts] = useState([]);
     const [searchQuery, setSearchQuery] = useState('');
     const [followedArtists, setFollowedArtists] = useState([]);
-    const [accessToken, setAccesstoken] = useState(null);
+    const [isLoading, setIsLoading] = useState(true);
+    const [accessToken, setAccessToken] = useState(null);
     const router = useRouter();
 
     const SPOTIFY_CLIENT_ID = process.env.NEXT_PUBLIC_SPOTIFY_CLIENT_ID;
@@ -30,36 +33,23 @@ const MainScreen = () => {
 
         const isTokenExpired = tokenExpiry && new Date().getTime() > tokenExpiry;
 
-        console.log("Current time:", new Date().getTime());
-        console.log("Token expiry time:", tokenExpiry);
-        console.log("Is token expired:", isTokenExpired);
-
         if (token && !isTokenExpired) {
-            console.log("not expired");
+            setAccessToken(token);
+            // console.log("not expired");
             fetchFollowedArtists(token).then(() => {
                 if (followedArtists.length > 0) {
                     fetchConcertsForFollowed(followedArtists);
                 }
+                setIsLoading(false);
             });
         } else if (refreshToken) {
             fetchNewAccessToken(refreshToken);
+            setIsLoading(false);
         } else {
             setShowPopup(true);
             fetchPopularConcerts();
+            setIsLoading(false);
         }
-
-        // console.log("token:", token);
-        // if (token) {
-        //     console.log("no token");
-        //     fetchFollowedArtists(token).then(() => {
-        //         if (followedArtists.length > 0) {
-        //             fetchConcertsForFollowed(followedArtists);
-        //         }
-        //     });
-        // } else {
-        //     setShowPopup(true); // Show the popup to link Spotify
-        //     fetchPopularConcerts();
-        // }
 
         const unsubscribe = auth.onAuthStateChanged(user => {
             if (!user) {
@@ -92,6 +82,8 @@ const MainScreen = () => {
             // Update local storage with the new token and expiration time
             localStorage.setItem('spotify_access_token', access_token);
             localStorage.setItem('spotify_token_expiry', expiryTime);
+
+            setAccessToken(access_token);
     
             // Continue fetching followed artists after refreshing the token
             fetchFollowedArtists(access_token);
@@ -102,6 +94,7 @@ const MainScreen = () => {
     };
 
     const fetchConcertsForFollowed = async (artists) => {
+        setIsLoading(true);
         const userId = auth.currentUser ? auth.currentUser.uid : null;
         if (!userId) {
             console.error('No user is currently logged in.');
@@ -176,6 +169,7 @@ const MainScreen = () => {
     };
 
     const fetchPopularConcerts = async () => {
+        setIsLoading(true);
         try {
             const response = await axios.get('https://app.ticketmaster.com/discovery/v2/events.json', {
                 params: {
@@ -205,6 +199,7 @@ const MainScreen = () => {
     };
 
     const fetchConcertsNearby = async (latitude, longitude) => {
+        setIsLoading(true);
         try {
             const response = await axios.get(`/api/concerts?lat=${latitude}&lon=${longitude}`);
             setConcerts(response.data.events);
@@ -274,6 +269,20 @@ const MainScreen = () => {
                     </div>
             </Popup>
 
+            {/* <div className={styles.sideContent}>
+                {accessToken && <SpotifyMusicPlayer accessToken={accessToken} followedArtists={followedArtists} /> }
+                {followedArtists.length > 0 && (
+                    <div className={styles.artistListings}>
+                        <h3>Your Followed Artists:</h3>
+                        {followedArtists.map((artist: any) => (
+                            <div key={artist.id} className={styles.artistItem}>
+                                <h4>{artist.name}</h4>
+                            </div>
+                        ))}
+                    </div>
+                )}
+            </div> */}
+
             <div className={styles.header}>
                 <input
                     type="text"
@@ -290,20 +299,23 @@ const MainScreen = () => {
                 </div>
             </div>
 
-            <div className={styles.concertListings}>
-            {filteredConcerts.length > 0 ? (
-                filteredConcerts.map((concert) => (
-                <div key={concert.id} className={styles.concertItem}>
-                    <h3>{concert.name}</h3>
-                    <p className="date">{new Date(concert.dates.start.localDate).toLocaleDateString()}</p>
-                    <p className="venue">{concert._embedded.venues[0].name}</p>
-                    <a href={concert.url} target="_blank" rel="noopener noreferrer">View Tickets</a>
+            {isLoading && <div className={styles.loading}>Loading...</div>}
+            {!isLoading && (
+                <div className={styles.concertListings}>
+                {filteredConcerts.length > 0 ? (
+                    filteredConcerts.map((concert) => (
+                    <div key={concert.id} className={styles.concertItem}>
+                        <h3 className="concertName">{concert.name}</h3>
+                        <p className="date">{new Date(concert.dates.start.localDate).toLocaleDateString()}</p>
+                        <p className="venue">{concert._embedded.venues[0].name}</p>
+                        <a href={concert.url} target="_blank" rel="noopener noreferrer">View Tickets</a>
+                    </div>
+                    ))
+                ) : (
+                    <p>No concerts found</p>
+                )}
                 </div>
-                ))
-            ) : (
-                <p>No concerts found</p>
             )}
-            </div>
 
             {followedArtists.length > 0 && (
                 <div className={styles.artistListings}>
