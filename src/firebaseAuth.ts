@@ -1,5 +1,16 @@
-import { RecaptchaVerifier, createUserWithEmailAndPassword, signInWithEmailAndPassword, sendEmailVerification, Auth, ConfirmationResult, UserCredential } from 'firebase/auth';
+import { createUserWithEmailAndPassword, signInWithEmailAndPassword, sendEmailVerification, UserCredential, getAuth, setPersistence, browserLocalPersistence } from 'firebase/auth';
 import { auth } from './firebaseClient';
+
+setPersistence(auth, browserLocalPersistence)
+  .then(() => {
+    // Successfully set persistence to local
+    console.log("Persistence set to local.");
+  })
+  .catch((error) => {
+    console.error("Error setting persistence:", error);
+});
+
+export { auth };
 
 export async function signUp(email: string, password: string): Promise<UserCredential> {
     try {

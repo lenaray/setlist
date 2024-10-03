@@ -1,0 +1,28 @@
+.profileButton {
+    position: relative;
+    font-family: 'Poppins', sans-serif;
+}
+
+.profileIcon {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 24px;
+}
+
+.dropdown {
+    position: absolute;
+    top: 100%;
+    right: 0;
+    background-color: white;
+    border: 1px solid #ccc;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+    z-index: 10;
+}
+
+.logoutButton {
+    padding: 8px 16px;
+    border: none;
+    background: none;
+    cursor: pointer;
+}
