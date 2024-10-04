@@ -4,8 +4,9 @@
     background-color: #121212;
     color: white;
     display: flex;
-    flex-direction: column;
-    align-items: center;
+    justify-content: flex-start;
+    flex-direction: row;
+    align-items: flex-start;
 }
 
 .popupOverlay {
@@ -42,6 +43,7 @@
 }
 
 .concertListings {
+    flex: 3;
     display: grid;
     grid-template-columns: 1fr;
     gap: 20px;
@@ -56,7 +58,7 @@
 }
 
 .concertItem a {
-    color: #1db954;
+    color: #bb09e7e1;
     text-decoration: none;
 }
 
@@ -68,12 +70,32 @@
     color: #bb09e7e1;
 }
 
+.leftSection {
+    flex: 1;
+    padding: 20px;
+}
+
+.centerSection {
+    flex: 2;
+    padding: 20px;
+}
+
+.spotifyPlayer {
+    flex: 1;
+    margin-top: 20px;
+}
+
 .header {
     display: flex;
     justify-content: center;
     align-items: center;
     margin-bottom: 20px;
     width: 100%;
+}
+
+.logo {
+    font-family: 'Poppins', sans-serif;
+    color: #bb09e7e1;
 }
 
 .searchBar {
@@ -118,4 +140,22 @@
 
 .spotifyPlayer {
     margin-bottom: 20px;
+}
+
+.filterOptions {
+    border: 1px solid #ccc;
+    background-color: #f9f9f9;
+    padding: 20px;
+    margin: 10px 0;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.filterGroup {
+    margin-bottom: 15px;
+}
+
+.filterGroup label {
+    display: block;
+    margin-bottom: 5px;
 }
