@@ -30,6 +30,10 @@ const SignUpPage = () => {
     }
   };
 
+  const handleVerifySchoolEmail = () => {
+    router.push('/verify');
+  };
+
   const goToHomePage = () => {
     router.push('/');
   };
@@ -56,6 +60,13 @@ const SignUpPage = () => {
         <button className={styles.authButton} onClick={handleSignUp}>
           Sign Up
         </button>
+
+        {/* <p>or verify your school email to unlock community features</p>
+
+        <button className={styles.authButton} onClick={handleVerifySchoolEmail}>
+          Verify School Email
+        </button> */}
+
         <a href="/login">Already have an account? Login</a>
       </div>
     </div>

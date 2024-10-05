@@ -44,19 +44,20 @@
 }
 
 .authButton {
-  width: 100%;
-  padding: 10px;
-  background-color: #0070f3;
-  color: white;
+  padding: 15px;
   border: none;
-  border-radius: 5px;
+  background-color: #bb09e7e1;
+  color: #fff;
+  font-size: 16px;
   cursor: pointer;
-  font-size: 1rem;
+  border-radius: 4px;
+  margin-bottom: 10px;
   transition: background-color 0.3s ease;
+  width: 100%;
 }
 
 .authButton:hover {
-  background-color: #005bb5;
+  background-color: #bb09e7c0;
 }
 
 .authBox a {
@@ -69,4 +70,19 @@
 
 .authBox a:hover {
   text-decoration: underline;
+}
+
+.backText {
+  cursor: pointer;
+  color: #bb09e7e1;
+  font-size: 0.9rem;
+  margin-bottom: 20px;
+  text-decoration: underline;
+  justify-content: left;
+  text-align: left;
+}
+
+.backText:hover {
+  color: #bb09e7c0;
+  text-decoration: none;
 }

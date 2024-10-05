@@ -1,33 +1,20 @@
 import React, { useState } from 'react';
 import { auth } from '../firebaseClient';
+import { useRouter } from 'next/router';
 import styles from '../styles/ProfileButton.module.css';
+import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 
 const ProfileButton = () => {
     const [dropdownOpen, setDropdownOpen] = useState(false);
+    const router = useRouter();
 
-    const handleLogout = async () => {
-        try {
-            await auth.signOut();
-            window.location.href = '/';
-        } catch (error) {
-            console.error("Error logging out:", error);
-        }
-    };
-
-    const toggleDropdown = () => {
-        setDropdownOpen(!dropdownOpen);
-    };
+    const handleProfileClick = () => {
+        router.push('/profile');
+    }
 
     return (
         <div className={styles.profileButton}>
-            <button onClick={toggleDropdown} className={styles.profileIcon}>
-            👤
-            </button>
-            {dropdownOpen && (
-                <div className={styles.dropdown}>
-                    <button onClick={handleLogout} className={styles.logoutButton}>Logout</button>
-                </div>
-            )}
+            <AccountCircleIcon onClick={handleProfileClick} className={styles.profileIcon} />
         </div>
     );
 };

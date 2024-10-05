@@ -7,11 +7,11 @@ const HomePage = () => {
 
   const handleLogin = () => {
     console.log("handling login");
-    router.push('/login'); // Navigate to login page
+    router.push('/login');
   };
 
   const handleSignUp = () => {
-    router.push('/signup'); // Navigate to sign-up page
+    router.push('/signup');
   };
 
   return (
