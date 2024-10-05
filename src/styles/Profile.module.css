@@ -1,43 +1,118 @@
-.profileContainer {
+.profileScreen {
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    min-height: 100vh;
-    background-color: #f0f0f0;
-    padding: 20px;
-    box-sizing: border-box;
+    height: 100vh;
+    background: url('/assets/music-bg7.jpg') no-repeat center center/cover;
+    position: relative;
 }
 
-.profileDetails {
+.logo {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    font-size: 1.5rem;
+    color: #bb09e7e1;
+    font-weight: bold;
+    cursor: pointer;
+    text-decoration: none;
+}
+
+.profileBox {
     background-color: white;
+    padding: 40px;
     border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    padding: 20px;
-    margin: 20px 0;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    width: 400px;
+}
+
+.title {
+    color: #bb09e7e1;
+    margin-bottom: 20px;
+}
+
+.heading {
+    margin-bottom: 20px;
+}
+
+.formContainer {
     width: 100%;
     max-width: 400px;
-    text-align: left;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
-.profileDetails p {
-    margin: 10px 0;
+.label {
+    margin-bottom: 5px;
     font-size: 16px;
     color: #333;
+    text-align: center;
+    width: 100%;
 }
 
-.logoutButton {
-    background-color: #ff4d4d;
-    color: white;
+.input {
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    width: 100%;
+}
+
+.button {
+    padding: 15px;
     border: none;
-    padding: 10px 20px;
-    border-radius: 5px;
-    cursor: pointer;
+    background-color: #bb09e7e1;
+    color: #fff;
     font-size: 16px;
-    margin-top: 20px;
+    cursor: pointer;
+    border-radius: 4px;
+    margin-bottom: 10px;
     transition: background-color 0.3s ease;
 }
 
-.logoutButton:hover {
-    background-color: #ff1a1a;
+.button:hover {
+    background-color: #bb09e7c0;
+}
+
+.savedConcerts {
+    margin-top: 20px;
+}
+
+.savedConcertsHeading {
+    margin-bottom: 10px;
+}
+
+.concertList {
+    list-style: none;
+    padding: 0;
+}
+
+.concertItem {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+}
+
+.communityChat {
+    margin-top: 30px;
+}
+
+.communityChatHeading {
+    margin-bottom: 10px;
+    color: #6200ea;
+}
+
+.communityList {
+    list-style: none;
+    padding: 0;
+}
+
+.communityUser {
+    margin-bottom: 10px;
+    background-color: #f0f0f0;
+    padding: 10px;
+    border-radius: 5px;
 }

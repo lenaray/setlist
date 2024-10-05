@@ -1,0 +1,74 @@
+.savedScreen {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    background: url('/assets/music-bg7.jpg') no-repeat center center/cover;
+    position: relative;
+}
+
+.logo {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    font-size: 1.5rem;
+    color: #bb09e7e1;
+    font-weight: bold;
+    cursor: pointer;
+    text-decoration: none;
+}
+
+.savedBox {
+    background-color: white;
+    padding: 40px;
+    border-radius: 10px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    width: 50%;
+}
+
+.savedBox h1 {
+    margin-bottom: 20px;
+    font-size: 2rem;
+    color: #333;
+}
+
+.concertListings {
+    flex: 3;
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 20px;
+    width: 60%;
+}
+
+.concertItem {
+    position: relative;
+    padding: 15px;
+    background-color: #f0f0f0;
+    border-radius: 5px;
+    color: black;
+}
+
+.bookmarkIcon {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    cursor: pointer;
+}
+
+.concertItem a {
+    position: absolute;
+    color: #bb09e7e1;
+    text-decoration: none;
+    bottom: 10px;
+    right: 10px;
+}
+
+.concertItem a:hover {
+    text-decoration: underline;
+}
+
+.concertName {
+    color: #bb09e7e1;
+}

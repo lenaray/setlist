@@ -18,8 +18,7 @@ const LoginPage = () => {
         alert('Please verify your email before logging in.');
         return;
       }
-
-      // alert(`User logged in! User ID: ${user.uid}`);
+      
       router.push('/main');
     } catch (error) {
       if (error instanceof Error) {
