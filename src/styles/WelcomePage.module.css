@@ -41,3 +41,7 @@
 .button:hover {
   background-color: #005bb5;
 }
+
+.overlay a {
+  color: #bb09e7e1;
+}

@@ -18,6 +18,7 @@ import MenuIcon from '@mui/icons-material/Menu';
 import SearchIcon from '@mui/icons-material/Search';
 import PlayArrowIcon from '@mui/icons-material/PlayArrow';
 import ProfileButton from '../components/ProfileButton.js';
+import GitHubIcon from '@mui/icons-material/GitHub';
 
 const MainScreen = () => {
     const [showPopup, setShowPopup] = useState(false);
@@ -589,7 +590,6 @@ const MainScreen = () => {
                         className={styles.bookmarkIcon}
                         onClick={handleBookmarkClick}
                     />
-                    {/* <ProfileButton /> */}
                 </div>
             </div>
 
